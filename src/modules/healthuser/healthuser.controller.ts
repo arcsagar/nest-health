@@ -1,12 +1,15 @@
 import { Body, Controller, Get, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { HealthUserDto } from './healthUser.dto';
 import { HealthuserService } from './healthuser.service';
+import { Public } from 'src/auth/auth-public.strategy';
 
 @Controller('healthuser')
 export class HealthuserController {
 
     constructor(private healthuserServ: HealthuserService){}
+    
 
+    @Public()
     @Post('/create')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
