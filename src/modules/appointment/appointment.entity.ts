@@ -47,6 +47,12 @@ export class appointment extends BaseEntity {
     isDeleted: boolean
     
     @Column({
+        type:"boolean",
+        default: false
+    })
+    isBooked: boolean
+    
+    @Column({
         type: "int"
     })
     doctorId: number

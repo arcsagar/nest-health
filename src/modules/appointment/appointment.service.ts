@@ -16,14 +16,23 @@ export class AppointmentService {
     }
 
     async allAppointment(userId) {
-        console.log('///////////')
-        console.log('///////////')
-        console.log('userId', userId)
-        console.log('///////////')
-        console.log('///////////')
         return await this.appointmentRepository.find({
             where: {
-                title: "test1"
+                doctorId: userId
+            },
+            relations: {
+                healthuser: true
+            }
+        })
+    }
+
+    async getAllnotBookedAppointment() {
+        return await this.appointmentRepository.find({
+            where: {
+                isBooked: false
+            },
+            relations: {
+                healthuser: true
             }
         })
     }

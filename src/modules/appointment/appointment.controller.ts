@@ -24,4 +24,14 @@ export class AppointmentController {
     async  getAllAppointment(@Request() req) {
         return await this.appointmentServ.allAppointment(req.user.userId)
     }
+    
+    @UseGuards(JwtAuthGuard)
+    @Get('/nonbooked')
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
+    async  nonBookedAppointment(@Request() req) {
+        return await this.appointmentServ.getAllnotBookedAppointment()
+    }
+
+    
 }
