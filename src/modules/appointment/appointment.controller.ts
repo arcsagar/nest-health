@@ -1,8 +1,9 @@
-import { Body, Controller, Get, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, UseGuards, UsePipes,Request, ValidationPipe } from '@nestjs/common';
 import { Public } from 'src/auth/auth-public.strategy';
 import { HealthUserDto } from '../healthuser/healthUser.dto';
 import { AppointmentDTO } from './appointment.dto';
 import { AppointmentService } from './appointment.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('appointment')
 export class AppointmentController {
@@ -16,11 +17,11 @@ export class AppointmentController {
         return await this.appointmentServ.createNewAppointment(apointmentData)
     }
 
-    @Public()
+    @UseGuards(JwtAuthGuard)
     @Get('/')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
-    async  getAllAppointment() {
-        return await this.appointmentServ.allAppointment()
+    async  getAllAppointment(@Request() req) {
+        return await this.appointmentServ.allAppointment(req.user.userId)
     }
 }

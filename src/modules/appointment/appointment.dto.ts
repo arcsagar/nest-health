@@ -22,6 +22,9 @@ export class AppointmentDTO {
     @IsNotEmpty({message: "allDay can not be empty"})
     allDay: boolean;
 
+    @IsNotEmpty({message: "healthuser can not be empty"})
+    healthuser: any;
+
 
 
 

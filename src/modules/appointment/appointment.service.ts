@@ -15,8 +15,17 @@ export class AppointmentService {
         return await this.appointmentRepository.save(user)
     }
 
-    async allAppointment() {
-        return await this.appointmentRepository.find()
+    async allAppointment(userId) {
+        console.log('///////////')
+        console.log('///////////')
+        console.log('userId', userId)
+        console.log('///////////')
+        console.log('///////////')
+        return await this.appointmentRepository.find({
+            where: {
+                title: "test1"
+            }
+        })
     }
 
 }

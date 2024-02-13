@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { healthuser } from "../healthuser/healthuser.entity";
 
 @Entity('appointments')
 
@@ -44,6 +45,14 @@ export class appointment extends BaseEntity {
         type:"boolean"
     })
     isDeleted: boolean
-
+    
+    @Column({
+        type: "int"
+    })
+    doctorId: number
+    
+    @ManyToOne(type => healthuser)
+    @JoinColumn()
+    healthuser: healthuser
 
 }
