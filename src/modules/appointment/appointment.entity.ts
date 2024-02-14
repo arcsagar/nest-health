@@ -61,4 +61,16 @@ export class appointment extends BaseEntity {
     @JoinColumn()
     healthuser: healthuser
 
+     @Column({ nullable: true })
+    @Column({
+        type: "int",
+        default: 0
+    })
+    patientId: number | undefined
+
+    @ManyToOne(type => healthuser,{nullable: true})
+    @JoinColumn()
+    patientuser: healthuser
+
+
 }

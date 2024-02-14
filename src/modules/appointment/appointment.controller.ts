@@ -33,5 +33,20 @@ export class AppointmentController {
         return await this.appointmentServ.getAllnotBookedAppointment()
     }
 
+    @Public()
+    @Post('/book')
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
+    async  patientBookAppointment(@Body() {id, patientId}: {id: any, patientId: any}) {
+        return await this.appointmentServ.bookAppointemnt(id,patientId)
+    }
+
+    @Public()
+    @Get('/patientBookedAppointment')
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
+    async  getAllBookedAppointmentPatient(@Request() req) {
+        return await this.appointmentServ.getAllBookedAppointmentPatient()
+    }
     
 }

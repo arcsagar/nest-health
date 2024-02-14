@@ -6,36 +6,49 @@ import { AppointmentDTO } from './appointment.dto';
 
 @Injectable()
 export class AppointmentService {
-    constructor(
-        @InjectRepository(appointment) private appointmentRepository: Repository<appointment>
-    ){
-        
-    }
-    async createNewAppointment(user: AppointmentDTO) {
-        return await this.appointmentRepository.save(user)
-    }
+  constructor(
+    @InjectRepository(appointment)
+    private appointmentRepository: Repository<appointment>,
+  ) {}
+  async createNewAppointment(user: AppointmentDTO) {
+    return await this.appointmentRepository.save(user);
+  }
 
-    async allAppointment(userId) {
-        return await this.appointmentRepository.find({
-            where: {
-                doctorId: userId
-            },
-            relations: {
-                healthuser: true
-            }
-        })
-    }
+  async allAppointment(userId) {
+    return await this.appointmentRepository.find({
+      where: {
+        doctorId: userId,
+      },
+      relations: {
+        healthuser: true,
+      },
+    });
+  }
 
-    async getAllnotBookedAppointment() {
-        return await this.appointmentRepository.find({
-            where: {
-                isBooked: false
-            },
-            relations: {
-                healthuser: true
-            }
-        })
-    }
+  async getAllnotBookedAppointment() {
+    return await this.appointmentRepository.find({
+      where: {
+        isBooked: false,
+      },
+      relations: {
+        healthuser: true,
+      },
+    });
+  }
 
+  async bookAppointemnt(id, patientId) {
+    const result = await this.appointmentRepository.update(
+      { id , isBooked: false},
+      { patientId, patientuser: patientId, isBooked: true },
+    );
+    return result.affected > 0; // Check if update was successful
+  }
+
+  async getAllBookedAppointmentPatient() {
+    return await this.appointmentRepository.find({
+      where: {
+        isBooked: true,
+      },relations : ['patientuser', 'healthuser']
+    });
+  }
 }
-
