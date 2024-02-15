@@ -41,12 +41,21 @@ export class AppointmentController {
         return await this.appointmentServ.bookAppointemnt(id,patientId)
     }
 
-    @Public()
+    @UseGuards(JwtAuthGuard)
     @Get('/patientBookedAppointment')
     @HttpCode(200)
     @UsePipes(ValidationPipe)
     async  getAllBookedAppointmentPatient(@Request() req) {
-        return await this.appointmentServ.getAllBookedAppointmentPatient()
+        console.table(req.user)
+        return await this.appointmentServ.getAllBookedAppointmentPatient(req.user.userId)
     }
     
+    @UseGuards(JwtAuthGuard)
+    @Get('/doctorBookedAppointment')
+    @HttpCode(200)
+    @UsePipes(ValidationPipe)
+    async  getAllBookedAppointmentDoctor(@Request() req) {
+        console.table(req.user)
+        return await this.appointmentServ.getAllBookedAppointmentDoctor(req.user.userId)
+    }
 }

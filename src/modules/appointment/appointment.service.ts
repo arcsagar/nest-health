@@ -44,10 +44,19 @@ export class AppointmentService {
     return result.affected > 0; // Check if update was successful
   }
 
-  async getAllBookedAppointmentPatient() {
+  async getAllBookedAppointmentPatient(patientId) {
     return await this.appointmentRepository.find({
       where: {
         isBooked: true,
+        patientId
+      },relations : ['patientuser', 'healthuser']
+    });
+  }
+  async getAllBookedAppointmentDoctor(doctorId) {
+    return await this.appointmentRepository.find({
+      where: {
+        isBooked: true,
+        doctorId
       },relations : ['patientuser', 'healthuser']
     });
   }
